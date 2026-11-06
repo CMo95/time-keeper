@@ -1,5 +1,4 @@
-import { StrictMode } from 'react'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 
 
 // Import all required code, common and pages
@@ -9,6 +8,7 @@ import Footer from './common/Footer.jsx'
 import Header from './common/Header.jsx'
 import Login from './pages/Login.jsx'
 import Weather from './pages/Weather.jsx'
+import Timesheet from './pages/Timesheet.jsx'
 
 function App() {
 
@@ -20,36 +20,31 @@ function App() {
     const { token, setToken, removeToken } = UseToken();
 
 
-    // if there is no token show the login content only
-    if (!token) {
-        return (<StrictMode>
-                  <Header removeToken={removeToken} />
-                  <Login setToken={setToken} />
-                  <Footer />
-                </StrictMode>
-        );
-    }
-
     // if there is a token show the apropriate page after authenticating via protected route
     // protected route checks for a token if there is not one forces back to login
     return (
-        <StrictMode>
-            <Header removeToken={removeToken} />
+        <>
+            <Header token={token} removeToken={removeToken} />
             <Router>
                 <Routes>
-                  <Route exact path="/" element={<ProtectedRoute token={token}>
-                                                   <Weather token={token} />
-                                                 </ProtectedRoute>
-                                                 } />
-                    <Route exact path="/Login" element={<Login setToken={setToken} />} />
-                    <Route exact path="/weather" element={<ProtectedRoute token={token}>
-                                                            <Weather token={token}/>
-                                                          </ProtectedRoute>
-                                                         } />
+                    <Route path="/Login" element={token ? <Navigate to="/" replace /> : <Login setToken={setToken} />} />
+                    <Route path="/" element={<ProtectedRoute token={token}>
+                                                 <Timesheet token={token} />
+                                             </ProtectedRoute>
+                                            } />
+                    <Route path="/weather" element={<ProtectedRoute token={token}>
+                                                        <Weather token={token}/>
+                                                    </ProtectedRoute>
+                                                   } />
+                    <Route path="/timesheet" element={<ProtectedRoute token={token}>
+                                                          <Timesheet token={token} />
+                                                      </ProtectedRoute>
+                                                   } />
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </Router>
             <Footer />
-        </StrictMode>
+        </>
     );
 }
 

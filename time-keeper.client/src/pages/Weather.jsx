@@ -37,7 +37,7 @@ function Weather(token) {
     );
 
     async function populateWeatherData() {
-        const response = await fetch('weatherforecast',
+        const response = await fetch('api/weatherforecast',
             {
                 headers: {
                     'Authorization': 'Bearer ' + token.token.accessToken
