@@ -70,6 +70,18 @@ export default defineConfig({
             '^/api/auth/protected': {
                 target,
                 secure: false
+            },
+            '^/api/timeentries': {
+                target,
+                secure: false
+            },
+            '^/api/timeentries/clock-in': {
+                target,
+                secure: false
+            },
+            '^/api/timeentries/clock-out': {
+                target,
+                secure: false
             }
         },
         port: parseInt(env.DEV_SERVER_PORT || '49454'),
