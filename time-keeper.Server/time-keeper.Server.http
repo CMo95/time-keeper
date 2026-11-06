@@ -1,55 +1,60 @@
 @time_keeper.Server_HostAddress = https://localhost:49454
+@username = demo-user
+@password = demo-password
+### paste-access-token-here
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImRlbW8tdXNlciIsImp0aSI6IjI4ZjdjNGVjLTAzYzQtNGQ5Mi1iMjgwLTFjMDBhM2JhNjQwZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMSIsImV4cCI6MTc5MzkzNTIwNCwiaXNzIjoidGltZS1rZWVwZXItc2VydmVyIiwiYXVkIjoidGltZS1rZWVwZXItY2xpZW50In0.KfhVJo2lCpyQvSiboMd_w6pZYakjk8HclW049m417BE
+### paste-refresh-token-here
+@refreshToken = 14b3d417-a655-414f-948f-a13597001427
 
 
-// DEMO CONTENT
+
+### -----< LOGIN API >----- ###
+### REGISTER
+POST {{time_keeper.Server_HostAddress}}/api/auth/register
+Content-Type: application/json
+{"username":"{{username}}","password":"{{password}}"}
+
+
+### LOGIN
+POST {{time_keeper.Server_HostAddress}}/api/auth/login
+Content-Type: application/json
+{"username":"{{username}}","password":"{{password}}"}
+
+
+### REFRESH TOKENS
+POST {{time_keeper.Server_HostAddress}}/api/auth/refresh
+Content-Type: application/json
+{"refreshToken": "{{refreshToken}}"}
+
+
+### REVOKE (Log out)
+POST {{time_keeper.Server_HostAddress}}/api/auth/revoke
+Content-Type: application/json
+{"refreshToken": "{{refreshToken}}"}
+
+
+### CHECK ACCESS TOKEN
+Get {{time_keeper.Server_HostAddress}}/api/auth/protected
+Authorization: Bearer {{accessToken}}
+
+
+
+### -----< CONTENT API >----- ###
+### WEATHER
 GET {{time_keeper.Server_HostAddress}}/weatherforecast
 Accept: application/json
 
-###
+
+### CLOCK-IN
+POST {{time_keeper.Server_HostAddress}}/api/timeentries/clock-in
+Authorization: Bearer {{accessToken}}
 
 
-// EARLY AUTH(API TESTING NOT SECURE)
-POST {{time_keeper.Server_HostAddress}}/token
-Content-Type: application/json
-{"username":"TestUser","password":"TestPassword1!"}
-
-###
+### CLOCK-OUT
+POST {{time_keeper.Server_HostAddress}}/api/timeentries/clock-out
+Authorization: Bearer {{accessToken}}
 
 
-// REGISTER NEW USER
-POST {{time_keeper.Server_HostAddress}}/api/auth/register
-Content-Type: application/json
-{"username":"TestUser","password":"TestPassword1!"}
-
-###
-
-
-// LOGIN
-POST {{time_keeper.Server_HostAddress}}/api/auth/login
-Content-Type: application/json
-{"username":"TestUser","password":"TestPassword1!"}
-
-###
-
-
-//REFRESH USER TOKENS
-POST {{time_keeper.Server_HostAddress}}/api/auth/refresh
-Content-Type: application/json
-{"refreshToken": "6c85b6a7-c82e-422a-9d69-a46cce203246"}
-
-###
-
-
-// REVOKE USER TOKENS(Logout)
-POST {{time_keeper.Server_HostAddress}}/api/auth/revoke
-Content-Type: application/json
-{"refreshToken": "8456b7d4-2af6-48dc-b037-5bf91bf81076"}
-
-###
-
-
-// CHECK accessToken FOR ACCESS
-Get {{time_keeper.Server_HostAddress}}/api/auth/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6Ik5vdCBBIFRhcmdldCIsImp0aSI6ImMzN2MzYzA1LWQ5MmYtNDM5NS04MGEwLTUyZmEwMTVkZjgxYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMSIsImV4cCI6MTc5MjQxOTE5NywiaXNzIjoidGltZS1rZWVwZXItc2VydmVyIiwiYXVkIjoidGltZS1rZWVwZXItY2xpZW50In0.8kXhNtZQFu_v9kGwGDTjG_nLyYD0UoUkM-Sg_HmwsIs
-
-###
+### LIST ENTRIES
+GET {{time_keeper.Server_HostAddress}}/api/timeentries
+Authorization: Bearer {{accessToken}}
