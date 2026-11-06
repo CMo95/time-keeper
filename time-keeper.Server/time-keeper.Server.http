@@ -2,9 +2,9 @@
 @username = demo-user
 @password = demo-password
 ### paste-access-token-here
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImRlbW8tdXNlciIsImp0aSI6IjI4ZjdjNGVjLTAzYzQtNGQ5Mi1iMjgwLTFjMDBhM2JhNjQwZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMSIsImV4cCI6MTc5MzkzNTIwNCwiaXNzIjoidGltZS1rZWVwZXItc2VydmVyIiwiYXVkIjoidGltZS1rZWVwZXItY2xpZW50In0.KfhVJo2lCpyQvSiboMd_w6pZYakjk8HclW049m417BE
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6ImRlbW8tdXNlciIsImp0aSI6IjI4ZGQxNGM3LWM0YzUtNGVmYi1hYzFmLTUwNWM1OTNmY2NiZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMiIsImV4cCI6MTc5Mzk0MTc2OCwiaXNzIjoidGltZS1rZWVwZXItc2VydmVyIiwiYXVkIjoidGltZS1rZWVwZXItY2xpZW50In0.ceQiNn5neqBsYiaHlofHZ96ht1558GGxM2SLLzH-mAU
 ### paste-refresh-token-here
-@refreshToken = 14b3d417-a655-414f-948f-a13597001427
+@refreshToken = DzNIK4kTqIHGd6YADNVN5fNPT+dFgLXWIcjk1zj7bU3QULQfQZd9QaeHJxebZiOS3ZW+LuH2p/a84BegKanmQQ==
 
 
 
@@ -43,6 +43,7 @@ Authorization: Bearer {{accessToken}}
 ### WEATHER
 GET {{time_keeper.Server_HostAddress}}/weatherforecast
 Accept: application/json
+Authorization: Bearer {{accessToken}}
 
 
 ### CLOCK-IN

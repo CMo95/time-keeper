@@ -8,6 +8,7 @@ namespace time_keeper.Server.Data
     {
         public DbSet<UserModel> Users { get; set; }
         public DbSet<RefreshTokenModel> RefreshTokens { get; set; }
+        public DbSet<TimeEntryModel> TimeEntries { get; set; }
         public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) : base(options)
         {
 
