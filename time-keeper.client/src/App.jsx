@@ -38,12 +38,12 @@ function App() {
             <Router>
                 <Routes>
                   <Route exact path="/" element={<ProtectedRoute token={token}>
-                                                   <Weather />
+                                                   <Weather token={token} />
                                                  </ProtectedRoute>
                                                  } />
                     <Route exact path="/Login" element={<Login setToken={setToken} />} />
                     <Route exact path="/weather" element={<ProtectedRoute token={token}>
-                                                            <Weather />
+                                                            <Weather token={token}/>
                                                           </ProtectedRoute>
                                                          } />
                 </Routes>
