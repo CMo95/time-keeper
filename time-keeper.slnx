@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="time-keeper.client/time-keeper.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="time-keeper.Server/time-keeper.Server.csproj" />
+</Solution>

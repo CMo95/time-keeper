@@ -1,0 +1,55 @@
+@time_keeper.Server_HostAddress = https://localhost:49454
+
+
+// DEMO CONTENT
+GET {{time_keeper.Server_HostAddress}}/weatherforecast
+Accept: application/json
+
+###
+
+
+// EARLY AUTH(API TESTING NOT SECURE)
+POST {{time_keeper.Server_HostAddress}}/token
+Content-Type: application/json
+{"username":"TestUser","password":"TestPassword1!"}
+
+###
+
+
+// REGISTER NEW USER
+POST {{time_keeper.Server_HostAddress}}/api/auth/register
+Content-Type: application/json
+{"username":"TestUser","password":"TestPassword1!"}
+
+###
+
+
+// LOGIN
+POST {{time_keeper.Server_HostAddress}}/api/auth/login
+Content-Type: application/json
+{"username":"TestUser","password":"TestPassword1!"}
+
+###
+
+
+//REFRESH USER TOKENS
+POST {{time_keeper.Server_HostAddress}}/api/auth/refresh
+Content-Type: application/json
+{"refreshToken": "6c85b6a7-c82e-422a-9d69-a46cce203246"}
+
+###
+
+
+// REVOKE USER TOKENS(Logout)
+POST {{time_keeper.Server_HostAddress}}/api/auth/revoke
+Content-Type: application/json
+{"refreshToken": "8456b7d4-2af6-48dc-b037-5bf91bf81076"}
+
+###
+
+
+// CHECK accessToken FOR ACCESS
+Get {{time_keeper.Server_HostAddress}}/api/auth/protected
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6Ik5vdCBBIFRhcmdldCIsImp0aSI6ImMzN2MzYzA1LWQ5MmYtNDM5NS04MGEwLTUyZmEwMTVkZjgxYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMSIsImV4cCI6MTc5MjQxOTE5NywiaXNzIjoidGltZS1rZWVwZXItc2VydmVyIiwiYXVkIjoidGltZS1rZWVwZXItY2xpZW50In0.8kXhNtZQFu_v9kGwGDTjG_nLyYD0UoUkM-Sg_HmwsIs
+
+###
