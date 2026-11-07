@@ -1,55 +1,59 @@
 @time_keeper.Server_HostAddress = https://localhost:49454
+@username = demo-user
+@password = demo-password
+@accessToken = paste-access-token-here
+@refreshToken = paste-refresh-token-here
 
 
-// DEMO CONTENT
-GET {{time_keeper.Server_HostAddress}}/weatherforecast
-Accept: application/json
 
-###
-
-
-// EARLY AUTH(API TESTING NOT SECURE)
-POST {{time_keeper.Server_HostAddress}}/token
-Content-Type: application/json
-{"username":"TestUser","password":"TestPassword1!"}
-
-###
-
-
-// REGISTER NEW USER
+### -----< LOGIN API >----- ###
+### REGISTER
 POST {{time_keeper.Server_HostAddress}}/api/auth/register
 Content-Type: application/json
-{"username":"TestUser","password":"TestPassword1!"}
-
-###
+{"username":"{{username}}","password":"{{password}}"}
 
 
-// LOGIN
+### LOGIN
 POST {{time_keeper.Server_HostAddress}}/api/auth/login
 Content-Type: application/json
-{"username":"TestUser","password":"TestPassword1!"}
-
-###
+{"username":"{{username}}","password":"{{password}}"}
 
 
-//REFRESH USER TOKENS
+### REFRESH TOKENS
 POST {{time_keeper.Server_HostAddress}}/api/auth/refresh
 Content-Type: application/json
-{"refreshToken": "6c85b6a7-c82e-422a-9d69-a46cce203246"}
-
-###
+{"refreshToken": "{{refreshToken}}"}
 
 
-// REVOKE USER TOKENS(Logout)
+### REVOKE (Log out)
 POST {{time_keeper.Server_HostAddress}}/api/auth/revoke
 Content-Type: application/json
-{"refreshToken": "8456b7d4-2af6-48dc-b037-5bf91bf81076"}
-
-###
+{"refreshToken": "{{refreshToken}}"}
 
 
-// CHECK accessToken FOR ACCESS
+### CHECK ACCESS TOKEN
 Get {{time_keeper.Server_HostAddress}}/api/auth/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6Ik5vdCBBIFRhcmdldCIsImp0aSI6ImMzN2MzYzA1LWQ5MmYtNDM5NS04MGEwLTUyZmEwMTVkZjgxYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMSIsImV4cCI6MTc5MjQxOTE5NywiaXNzIjoidGltZS1rZWVwZXItc2VydmVyIiwiYXVkIjoidGltZS1rZWVwZXItY2xpZW50In0.8kXhNtZQFu_v9kGwGDTjG_nLyYD0UoUkM-Sg_HmwsIs
+Authorization: Bearer {{accessToken}}
 
-###
+
+
+### -----< CONTENT API >----- ###
+### WEATHER
+GET {{time_keeper.Server_HostAddress}}/weatherforecast
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### CLOCK-IN
+POST {{time_keeper.Server_HostAddress}}/api/timeentries/clock-in
+Authorization: Bearer {{accessToken}}
+
+
+### CLOCK-OUT
+POST {{time_keeper.Server_HostAddress}}/api/timeentries/clock-out
+Authorization: Bearer {{accessToken}}
+
+
+### LIST ENTRIES
+GET {{time_keeper.Server_HostAddress}}/api/timeentries
+Authorization: Bearer {{accessToken}}

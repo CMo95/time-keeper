@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 
 using time_keeper.Server.Services;
 using time_keeper.Server.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace time_keeper.Server.Controllers
 {
@@ -22,6 +23,7 @@ namespace time_keeper.Server.Controllers
         }
 
         [HttpPost("register")]
+        [EnableRateLimiting("auth")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestModel request)
         {
             var user = await _authService.RegisterAsync(request);
@@ -31,6 +33,7 @@ namespace time_keeper.Server.Controllers
             return Ok(new { user.Id, user.Username });
         }
         [HttpPost("login")]
+        [EnableRateLimiting("auth")]
         public async Task<IActionResult> Login([FromBody] LoginRequestModel request)
         {
             var response = await _authService.LoginAsync(request);
@@ -42,6 +45,7 @@ namespace time_keeper.Server.Controllers
             return Ok(response);
         }
         [HttpPost("refresh")]
+        [EnableRateLimiting("auth")]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
         {
             var response = await _authService.RefreshTokenAsync(request.RefreshToken);
@@ -54,12 +58,8 @@ namespace time_keeper.Server.Controllers
         [HttpPost("revoke")]
         public async Task<IActionResult> Revoke([FromBody] RefreshTokenRequest request)
         {
-            var response = await _authService.RefreshTokenAsync(request.RefreshToken);
-            if (response == null)
-            {
-                return Unauthorized("Invalid or expired refresh token");
-            }
-            return Ok();
+            await _authService.RevokeTokenAsync(request.RefreshToken);
+            return NoContent();
         }
         [HttpGet("protected")]
         [Authorize]

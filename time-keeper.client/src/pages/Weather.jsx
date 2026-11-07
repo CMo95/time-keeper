@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './styling/Weather.css';
-function Weather() {
+function Weather(token) {
     const [forecasts, setForecasts] = useState();
 
     useEffect(() => {
@@ -37,7 +37,12 @@ function Weather() {
     );
 
     async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
+        const response = await fetch('api/weatherforecast',
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + token.token.accessToken
+                }
+            });
         if (response.ok) {
             const data = await response.json();
             setForecasts(data);

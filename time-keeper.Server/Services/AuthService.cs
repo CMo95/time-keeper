@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
 
-using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-
-using BCrypt.Net;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 using time_keeper.Server.Data;
 using time_keeper.Server.Models;
-using System.Security.Claims;
 
 namespace time_keeper.Server.Services
 {
@@ -28,7 +24,7 @@ namespace time_keeper.Server.Services
         {
             if (_context.Users.Any(u => u.Username == request.Username))
             {
-                return null; // Handles existing users
+                return null; // Username already exists
             }
 
             var user = new UserModel
@@ -40,21 +36,85 @@ namespace time_keeper.Server.Services
             await _context.SaveChangesAsync();
             return user;
         }
-        public async Task<TokenResponseModel> LoginAsync(LoginRequestModel request)
+        public async Task<TokenResponseModel?> LoginAsync(LoginRequestModel request)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             {
                 return null; // Invalid credentials
             }
-            var accessToken = GenerateAccessToken(user);
-            var refreshToken = await GenerateRefreshTokenAsync(user);
+            return await IssueTokensAsync(user);
+        }
+        public async Task<TokenResponseModel?> RefreshTokenAsync(string refreshToken)
+        {
+            var token = await FindTokenAsync(refreshToken);
+            if (token == null)
+            {
+                return null; // Invalid token
+            }
+
+            if (token.IsRevoked)
+            {
+                await RevokeAllForUserAsync(token.UserId);
+                return null; // Revoked token
+            }
+
+            if (token.Expires < DateTime.UtcNow)
+            {
+                return null; // Expired token
+            }
+
+            var user = await _context.Users.FindAsync(token.UserId);
+            if (user == null)
+            {
+                return null; // User not found
+            }
+
+            token.IsRevoked = true; // Rotate: each refresh token can only be used once
+            return await IssueTokensAsync(user); // Saves the revoke above
+        }
+        public async Task RevokeTokenAsync(string refreshToken)
+        {
+            var token = await FindTokenAsync(refreshToken);
+            if (token == null || token.IsRevoked)
+            {
+                return; // Do nothing(Token already revoked or not found)
+            }
+
+            token.IsRevoked = true;
+            await _context.SaveChangesAsync();
+        }
+        private async Task<TokenResponseModel> IssueTokensAsync(UserModel user)
+        {
+            var rawRefreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+            _context.RefreshTokens.Add(new RefreshTokenModel
+            {
+                TokenHash = HashToken(rawRefreshToken),
+                UserId = user.Id,
+                Expires = DateTime.UtcNow.AddDays(double.Parse(_configuration["Jwt:RefreshTokenExpirationDays"]!))
+            });
+            await _context.SaveChangesAsync();
             return new TokenResponseModel
             {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken.Token
+                AccessToken = GenerateAccessToken(user),
+                RefreshToken = rawRefreshToken
             };
         }
+        private async Task RevokeAllForUserAsync(int userId)
+        {
+            var tokens = await _context.RefreshTokens.Where(t => t.UserId == userId && !t.IsRevoked).ToListAsync();
+            foreach (var t in tokens)
+            {
+                t.IsRevoked = true;
+            }
+            await _context.SaveChangesAsync();
+        }
+        private Task<RefreshTokenModel?> FindTokenAsync(string rawToken)
+        {
+            var hash = HashToken(rawToken);
+            return _context.RefreshTokens.FirstOrDefaultAsync(t => t.TokenHash == hash);
+        }
+        private static string HashToken(string token) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(token)));
         private string GenerateAccessToken(UserModel user)
         {
             var jwtSettings = _configuration.GetSection("Jwt");
@@ -81,44 +141,6 @@ namespace time_keeper.Server.Services
                 signingCredentials: creds
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-        private async Task<RefreshTokenModel> GenerateRefreshTokenAsync(UserModel user)
-        {
-            var refreshToken = new RefreshTokenModel
-            {
-                Token = Guid.NewGuid().ToString(),
-                UserId = user.Id,
-                Expires = DateTime.UtcNow.AddDays(double.Parse(_configuration["Jwt:RefreshTokenExpirationDays"]!))
-            };
-            _context.RefreshTokens.Add(refreshToken);
-            await _context.SaveChangesAsync();
-            return refreshToken;
-        }
-        public async Task<TokenResponseModel> RefreshTokenAsync(string refreshToken)
-        {
-            var token = await _context.RefreshTokens.FirstOrDefaultAsync(t => t.Token == refreshToken);
-            if (token == null || token.IsRevoked || token.Expires < DateTime.UtcNow)
-            {
-                return null; // Invalid or expired token
-            }
-            var user = await _context.Users.FindAsync(token.UserId);
-            if (user == null)
-            {
-                return null; // User not found
-            }
-
-            // Generate new access token
-            var newAccessToken = GenerateAccessToken(user);
-
-            // Generate new refresh token and revoke the old one
-            token.IsRevoked = true;
-            var newRefreshToken = await GenerateRefreshTokenAsync(user);
-            await _context.SaveChangesAsync();
-            return new TokenResponseModel
-            {
-                AccessToken = newAccessToken,
-                RefreshToken = newRefreshToken.Token
-            };
         }
     }
 }
