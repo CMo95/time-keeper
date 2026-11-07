@@ -110,15 +110,21 @@ export default function useToken() {
     };
 
     const removeToken = () => {
-        fetch('/api/auth/revoke', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"refreshToken":token.refreshToken})
-        });
-        localStorage.removeItem('noATa-timKee-token');
-        setToken(null);
+
+        // Only attempt to revoke the token if it exists in state
+        if (token) {
+            fetch('/api/auth/revoke', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "refreshToken": token.refreshToken })
+            }).catch(() => {
+                // Server unreachable, but we still want to remove the token from localStorage and state
+            });
+            localStorage.removeItem('noATa-timKee-token');
+            setToken(null);
+        }
     };
 
     // Returns the functions to saveToken(as setToken) and removeToken as well as the token itself
