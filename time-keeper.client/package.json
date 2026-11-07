@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "core-js": "^3.50.0",
     "globals": "^17.13.0",
     "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",
