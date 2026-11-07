@@ -3,7 +3,7 @@ A small full-stack time-tracking app: clock in and out, and review your recorded
 
 ![Screenshot](docs/screenshot.png)
 
-Status: work in progress (v0.1). Authentication and basic clock in/out are working. See the roadmap below.
+Status: work in progress (v0.1.3). Authentication and basic clock in/out are working. See the roadmap below.
 
 Stack
 Front end: React 19, Vite, React Router
