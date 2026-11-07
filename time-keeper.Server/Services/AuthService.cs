@@ -36,7 +36,7 @@ namespace time_keeper.Server.Services
             await _context.SaveChangesAsync();
             return user;
         }
-        public async Task<TokenResponseModel> LoginAsync(LoginRequestModel request)
+        public async Task<TokenResponseModel?> LoginAsync(LoginRequestModel request)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
@@ -45,7 +45,7 @@ namespace time_keeper.Server.Services
             }
             return await IssueTokensAsync(user);
         }
-        public async Task<TokenResponseModel> RefreshTokenAsync(string refreshToken)
+        public async Task<TokenResponseModel?> RefreshTokenAsync(string refreshToken)
         {
             var token = await FindTokenAsync(refreshToken);
             if (token == null)

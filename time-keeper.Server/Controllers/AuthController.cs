@@ -56,15 +56,10 @@ namespace time_keeper.Server.Controllers
             return Ok(response);
         }
         [HttpPost("revoke")]
-        [EnableRateLimiting("auth")]
         public async Task<IActionResult> Revoke([FromBody] RefreshTokenRequest request)
         {
-            var response = await _authService.RefreshTokenAsync(request.RefreshToken);
-            if (response == null)
-            {
-                return Unauthorized("Invalid or expired refresh token");
-            }
-            return Ok();
+            await _authService.RevokeTokenAsync(request.RefreshToken);
+            return NoContent();
         }
         [HttpGet("protected")]
         [Authorize]

@@ -71,8 +71,8 @@ app.UseDefaultFiles();
 app.MapStaticAssets();
 app.UseHttpsRedirection();
 app.UseAuthentication();
-app.UseAuthorization();
 app.UseRateLimiter();
+app.UseAuthorization();
 app.MapControllers();
 
 if (app.Environment.IsDevelopment())
