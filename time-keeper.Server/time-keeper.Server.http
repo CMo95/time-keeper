@@ -1,10 +1,8 @@
 @time_keeper.Server_HostAddress = https://localhost:49454
 @username = demo-user
 @password = demo-password
-### paste-access-token-here
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6ImRlbW8tdXNlciIsImp0aSI6IjI4ZGQxNGM3LWM0YzUtNGVmYi1hYzFmLTUwNWM1OTNmY2NiZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMiIsImV4cCI6MTc5Mzk0MTc2OCwiaXNzIjoidGltZS1rZWVwZXItc2VydmVyIiwiYXVkIjoidGltZS1rZWVwZXItY2xpZW50In0.ceQiNn5neqBsYiaHlofHZ96ht1558GGxM2SLLzH-mAU
-### paste-refresh-token-here
-@refreshToken = DzNIK4kTqIHGd6YADNVN5fNPT+dFgLXWIcjk1zj7bU3QULQfQZd9QaeHJxebZiOS3ZW+LuH2p/a84BegKanmQQ==
+@accessToken = paste-access-token-here
+@refreshToken = paste-refresh-token-here
 
 
 

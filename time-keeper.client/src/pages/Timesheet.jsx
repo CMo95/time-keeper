@@ -60,7 +60,7 @@ function Timesheet({ token }) {
                 </thead>
                 <tbody>
                     {entries.map(e => (
-                        <tr>
+                        <tr key={e.id}>
                             <td>
                                 {new Date(e.startUTC).toLocaleString()}
                             </td>
