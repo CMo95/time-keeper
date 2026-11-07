@@ -95,7 +95,7 @@ async function loginUser(credentials) {
 
     if (!response.ok) {
         if (response.status == 400) {
-            throw new Error(`Login failed: ` + await response.text());
+            throw new Error(`Login failed: ` + await readProblem(response));
         }
         else if (response.status == 401)
         {
@@ -126,15 +126,30 @@ async function registerUser(credentials) {
 
     if (!response.ok) {
         if (response.status == 400) {
-            throw new Error(`Registration failed: ` + await response.text());
+            throw new Error(`Registration failed: ` + await readProblem(response));
         }
         else {
-            throw new Error(`Login failed`);
+            throw new Error(`Registration failed`);
         }
     }
 
     const data = await response.json();
     return data;
+}
+
+async function readProblem(response) {
+    const text = await response.text();
+    try {
+
+        // Process JSON errors within response and return them as a string
+        const problem = JSON.parse(text);
+        if (problem.errors) {
+            return Object.values(problem.errors).flat().join('\n');
+        }
+    } catch {
+        // No processing needed if already a string or not JSON
+    }
+    return text;
 }
 
 // Checks that setToken exists within Login and is of the type "func"(function)
