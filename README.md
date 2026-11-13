@@ -2,7 +2,8 @@
 
 A small full-stack time-tracking app: clock in and out, and review your recorded time. Built as an independent personal project in my own time, with no code or data from any employer.
 
-![Time Keeper timesheet page](docs/screenshot.png)
+![Time Keeper timesheet page](docs/screenshot-1.png)
+![Time Keeper timesheet page](docs/screenshot-2.png)
 
 **Status:** work in progress (v0.1.4). Authentication and basic clock in/out are working. See the roadmap below.
 

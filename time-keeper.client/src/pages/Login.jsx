@@ -77,10 +77,10 @@ function Login({ setToken }) {
                     <label htmlFor="pword">Password</label>
                     <input id="pword" type="password" placeholder="Enter Password" onChange={(e) => { setPassword(e.target.value); }} required disabled={loadingLog || loadingReg} />
                     {error && <div className="error-message">{error}</div>}
-                    <button className="loginPage_register" type="submit" disabled={loadingReg} name="register">
+                    <button className="loginPage_register button_foreGreen" type="submit" disabled={loadingReg} name="register">
                         {loadingReg ? 'Registering new user...' : 'Register'}
                     </button>
-                    <button className="loginPage_login" type="submit" disabled={loadingLog} name="login">
+                    <button className="loginPage_login button_foreGreen" type="submit" disabled={loadingLog} name="login">
                         {loadingLog ? 'Logging in...' : 'Login'}
                     </button>
                 </div>

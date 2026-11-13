@@ -17,7 +17,7 @@ function Header({ token, removeToken }) {
             </div>
             <div>
                 {token && <p>{jwtDecode(token.accessToken).name}</p>}
-                {token && <button onClick={removeToken}>Logout</button>}
+                {token && <button className="button_backRed" onClick={removeToken}>Logout</button>}
             </div>
         </header>
     );

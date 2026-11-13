@@ -1,16 +1,93 @@
-.timesheet {
-    max-width: 40rem;
-    margin: 2rem auto;
+.timesheetPage_containerOuter {
+    margin: auto;
 }
 
-.timesheet table {
+.timesheetPage_containerOuter table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
 }
 
-.timesheet th, .timesheet td {
+.timesheetPage_containerOuter th {
+    color: var(--text);
+}
+
+.timesheetPage_containerOuter td {
+    color: var(--text-h);
+}
+
+.timesheetPage_containerOuter th, .timesheetPage_containerOuter td {
     text-align: left;
-    padding: 0.4rem 0.6rem;
+    padding: 0.75rem 1.5rem;
     border-bottom: 1px solid #8884;
+    font-weight: 400;
+    min-width: 7rem;
+}
+
+.timesheetPage_containerInner {
+    width: fit-content;
+    align-self: center;
+    border: 1px solid #282a34;
+    border-radius: 20px;
+    background-color: #171a21;
+    margin-top: 1.5rem;
+    min-width: 35rem;
+}
+
+.timesheetPage_containerInner h2 {
+    justify-self: left;
+}
+
+.timesheetPage_containerInnerTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: stretch;
+    margin-top: 2.5rem;
+    padding: 1.3125rem 2rem;
+}
+
+.timesheetPage_containerInnerTop h1 {
+    justify-self: left;
+}
+
+.timesheetPage_containerInnerBottom {
+    min-width: stretch;
+}
+
+.timesheetPage_containerInnerBottom div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.0625rem 1.5rem;
+}
+
+.timesheetPage_timeSince_in {
+    justify-self: left;
+}
+
+.timesheetPage_timeSince_in::before {
+    content: "●";
+    color: #34d399;
+}
+
+.timesheetPage_timeSince_out {
+    justify-self: left;
+}
+
+.timesheetPage_timeSince_out::before {
+    content: "●";
+    color: var(--text);
+}
+
+.timesheetPage_clockinout {
+    height: 3.375rem;
+    width: 7.938rem;
+}
+
+.timesheetPage_inProgress {
+    color: #38d099 !important;
+    font-weight: 500 !important;
 }

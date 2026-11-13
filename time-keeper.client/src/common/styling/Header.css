@@ -34,18 +34,5 @@ header button {
     display: inline-block;
     height: 2.5rem;
     width: 6.125rem;
-    margin-top: 0.1875rem;
-    border: 1px solid #282a34;
-    border-radius: 0.5lh;
-    font-family: var(--sans);
-    font-size: 17px;
-    font-weight: 500;
-    letter-spacing: 0.18px;
-    color: var(--text-h);
-    background-color: var(--bg);
     cursor: pointer;
 }
-    header button:hover {
-        background-color: #f77170;
-        color: #2a0506;
-    }

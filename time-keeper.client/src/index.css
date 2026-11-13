@@ -106,3 +106,58 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+button {
+    margin-top: 0.1875rem;
+    border: 1px solid #282a34;
+    border-radius: 0.5lh;
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0.18px;
+    cursor: pointer;
+}
+
+tbody > tr:last-child > td {
+    border-bottom: 0;
+}
+
+.button_backGreen {
+    color: var(--text-h);
+    background-color: var(--bg);
+}
+
+.button_backGreen:hover {
+    background-color: #2dd4c0;
+    color: #03302b;
+}
+
+.button_backRed {
+    color: var(--text-h);
+    background-color: var(--bg);
+}
+
+.button_backRed:hover {
+    background-color: #f77170;
+    color: #2a0506;
+}
+
+.button_foreGreen {
+    color: var(--text-h);
+    background-color: #171a21;
+}
+
+.button_foreGreen:hover {
+    background-color: #2dd4c0;
+    color: #03302b;
+}
+
+.button_foreRed {
+    color: var(--text-h);
+    background-color: #171a21;
+}
+
+.button_foreRed:hover {
+    background-color: #f77170;
+    color: #2a0506;
+}
