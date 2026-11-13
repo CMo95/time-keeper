@@ -5,8 +5,7 @@ import './styling/Footer.css';
 function Footer() {
     return (
         <footer>
-            <p>Version {version}</p>
-            <p>By Callum Morgan</p>
+            <p>Time Keeper v{version} · By Callum Morgan</p>
         </footer>
     );
 }

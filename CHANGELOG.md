@@ -2,6 +2,11 @@
 
 ## 0.1.4
 
+- Updated all UI
+- Added username to header when logged in
+- Updated table to display better formats
+- Limited table to 50 rows(was previously 100)
+
 ### Fixed
 
 - Logging out now revokes the refresh token instead of issuing a new one

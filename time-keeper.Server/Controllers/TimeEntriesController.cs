@@ -25,7 +25,7 @@ namespace time_keeper.Server.Controllers
         public async Task<IActionResult> GetEntries()
         {
             var userId = CurrentUserId;
-            var entries = await _context.TimeEntries.Where(e => e.UserId == userId).OrderByDescending(e => e.StartUTC).Take(100).ToListAsync();
+            var entries = await _context.TimeEntries.Where(e => e.UserId == userId).OrderByDescending(e => e.StartUTC).Take(50).ToListAsync();
             return Ok(entries);
         }
 

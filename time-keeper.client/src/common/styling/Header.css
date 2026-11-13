@@ -1,8 +1,38 @@
 Header {
-    position: relative;
-    margin: 0 auto;
-    width: calc(100% - 2rem);
-    max-width: 1280px;
-    padding: 1rem;
-    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.125rem 2.5rem;
+    border-bottom: 1px solid #282a34;
+}
+
+.header_icon {
+    width: 1.3lh;
+    height: 1.3lh;
+    border-radius: 0.30lh;
+    align-Content: center;
+    background-color: #2dd4c0;
+    color: #03302b;
+}
+
+header div {
+    display: inline-block;
+    margin-right: 0.75rem;
+}
+
+header h2 {
+    display: inline-block;
+    font-size: 22px;
+}
+
+header p {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+header button {
+    display: inline-block;
+    height: 2.5rem;
+    width: 6.125rem;
+    cursor: pointer;
 }

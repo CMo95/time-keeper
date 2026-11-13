@@ -1,7 +1,7 @@
 {
   "name": "time-keeper.client",
   "private": true,
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^7.3.1",
+    "@fortawesome/react-fontawesome": "^3.5.0",
     "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",
     "react": "^19.2.8",
