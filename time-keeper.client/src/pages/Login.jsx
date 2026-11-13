@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './styling/Login.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 function Login({ setToken }) {
 
@@ -58,25 +60,32 @@ function Login({ setToken }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>
-                Login
-            </h2>
-            {error && <div className="error-message">{error}</div>}
-            <div>
-                <label htmlFor="uname">Username:</label>
-                <input id="uname" type="text" placeholder="Enter Username" onChange={(e) => { setUserName(e.target.value); }} required disabled={loadingLog || loadingReg} />
-                <label htmlFor="pword">Password</label>
-                <input id="pword" type="password" placeholder="Enter Password" onChange={(e) => { setPassword(e.target.value); }} required disabled={loadingLog || loadingReg} />
-                <span></span>
-                <button type="submit" disabled={loadingReg} name="register">
-                    {loadingReg ? 'Registering new user...' : 'Register'}
-                </button>
-                <button type="submit" disabled={loadingLog} name="login">
-                    {loadingLog ? 'Logging in...' : 'Login'}
-                </button>
-            </div>
-        </form>
+        <div className="loginPage_container">
+            <form onSubmit={handleSubmit}>
+                <div className="loginPage_icon">
+                    <FontAwesomeIcon icon={faClock} />
+                </div>
+                <h2>
+                    Welcome to Time Keeper
+                </h2>
+                <p>
+                    Log in, or register to create an account.
+                </p>
+                <div>
+                    <label htmlFor="uname">Username</label>
+                    <input id="uname" type="text" placeholder="Enter Username" onChange={(e) => { setUserName(e.target.value); }} required disabled={loadingLog || loadingReg} />
+                    <label htmlFor="pword">Password</label>
+                    <input id="pword" type="password" placeholder="Enter Password" onChange={(e) => { setPassword(e.target.value); }} required disabled={loadingLog || loadingReg} />
+                    {error && <div className="error-message">{error}</div>}
+                    <button className="loginPage_register" type="submit" disabled={loadingReg} name="register">
+                        {loadingReg ? 'Registering new user...' : 'Register'}
+                    </button>
+                    <button className="loginPage_login" type="submit" disabled={loadingLog} name="login">
+                        {loadingLog ? 'Logging in...' : 'Login'}
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 }
 
